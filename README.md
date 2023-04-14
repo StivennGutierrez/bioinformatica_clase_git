@@ -53,4 +53,4 @@ Adicionalmente, para enraizar el árbol obtenido me ubiqué en la rama central y
 
 *Análisis de árbol de máxima verosimilitud:
 ![Arbol](https://user-images.githubusercontent.com/128840301/232170859-ac7b8724-ad6d-4a25-ac47-69739c95108e.png)
-
+Se observá que la especie Spodoptera cilium está efectivamente más estrechamente relacionada con la secuencia query, aunque exhiba un valor de boostrap inconsistente en comparación a las otras especies. Por otro lado, atendiendo a las relaciones filogenéticas inferidaas, las especies Mythimna loreyi y Peridroma saucia son bastante cercanas entre sí y el grupo más reciente dentro de la historia evolutiva del árbol, asimismo presentan unvalor de soporte de rama de mayor confianza con tiempo evolutivos muy similares en cuanto a diversificación de su ancestro en común. Y la especie que se consideraría menos reciente corresponde a Spodoptera exigua.
