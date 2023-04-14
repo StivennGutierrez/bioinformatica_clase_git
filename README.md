@@ -1,1 +1,56 @@
-# bioinformatica_clase_git
+Primer punto:
+1)	En la carpeta ‘Archivos_PARCIAL’ dejé el archivo FASTA con las secuencias del popset:
+En NCBI, filtre por Popset y busqué el código ‘1776322181’, ya en el poset: send to>File>FASTA>download
+2)	Para cambiar el nombre de cada secuencia a la estructura Código de la secuencia_Nombre del gen_Género_Epíteto específico:
+En Atom:
+Find all: (>\w+\.\w+)\s(\w+)\s(\w+).*
+Replace all: $1_COI_$2_$3
+Y llamé al archivo: Spodoptera_sequences.fasta
+3)	Luego, al ya tener listo el archivo, lo subí a una carpeta que cree en el clúster ‘Blast’:
+Para ello me ubiqué en la carpeta de la llave y corrí el siguiente código teniendo en cuenta la ruta en el clúster correspondiente a la carpeta ‘Blast’:
+► scp -i bio.pt.pem -P 37022 /mnt/c/Users/stive/Downloads/Archivos_PARCIAL/Spodoptera_sequences.fasta bio.pt@172.25.255.10:/home/bio.pt/data/Parcial1/parcial1_StivennGutierrez/Blast
+4)	De esta forma, ya en el clúster en la carpeta ‘Blast’, descargue la secuencia query:
+► wget “https://raw.githubusercontent.com/paula-torres/bioinformatica_ur/main/files/query_parcial.fasta”
+5)	Ya con ambos archivos en la carpeta, antes de generar el BLAST, primero construí la base de datos tipo Blastn a partir de ambos archivos mediante:
+► salloc
+module load blast/2.7.1
+makeblastdb -in spidoptera_sequences.fasta -dbtype nucl -parse_seqids -out trans_spidoptera -title "Spidoptera_transcriptome"
+6)	Con la base de secuencias tipo Blastn, ahora si corrí el BLAST:
+► blastn -query query_parciale.fasta -task megablast -db trans_spidoptera -outfmt 7 -word_size 7 -out blast_spidoptera -num_threads 1
+
+*Análisis de BLAST:
+¿Cuál es la identidad más probable de la secuencia?
+La especie Spodoptera cilium con un % de identidad igual a 96.9.
+¿Basado en qué tomó esta decisión? 
+Teniendo en cuenta también el valor de E-value, donde se observa que es 0, es decir el ruido de fondo por aleatoriedad es bajo y por ende la coincidencia es mayor. Así como el valor del Bit-score que indica una alineación de buena calidad con un valor de 1151 para esta especie.
+¿Es un gen mitocondrial o nuclear? Mitocondrial
+Por último, cabe destacar que todas las secuencias para esta especie ranquearon un puntaje de mayor coincidencia e identidad para la secuencia query en comparación al resto.
+Segundo punto:
+Para realizar el alineamiento con las secuencias previamente utilizadas, las copie a una nueva carpeta ‘Alignment’:
+► cp Spodoptera_sequences.fasta /home/bio.pt/data/Parcial1/parcial1_StivennGutierrez/Alignment
+► cp query_parcial.fasta /home/bio.pt/data/Parcial1/parcial1_StivennGutierrez/Alignment
+Ya en la carpeta con ambos archivos, los concatene y los guarde en un nuevo FASTA:
+► cat Spodoptera_sequences.fasta query_parcial.fasta > ALlsequences.FASTA
+Luego, al ya tener todas las secuencias en un mismo FASTA, realicé un alineamiento por MUSCLE:
+Para ello:
+► Salloc
+► module load muscle/3.8.31
+► muscle -in ALlsequences.FASTA -out allsequences_spidoptera_muscle.fast
+Tras obtener el alineamiento por MUSCLE, y con el propósito de generar un árbol de máxima verosimilitud por iqtree:
+Primero, creé una carpeta ‘fasconcat’ donde copié el archivo “FASconCAT-G_v1.05.1.pl”:
+► cp FASconCAT-G_v1.05.1.pl /home/bio.pt/data/Parcial1/parcial1_StivennGutierrez/Alignment/fasconcat
+Y moví el archivo correspondiente al alineamiento por MUSCLE:
+► mv allsequences_spidoptera_muscle.fast fasconcat
+Con ambos archivos dentro de la carpeta de fasconcat, cargue FASCONCAT:
+► ./FASconCAT-G_v1.05.1.pl
+En la interfaz, cambie los parámetros Nexus para la opción blocked (n), para Phylip (2p) para la opción relaxed y luego ejecuté (s).
+De esta forma, ya obtuve la matriz necesaria para generar el árbol de máxima verosimilitud. Para generar el árbol por iqtree:
+► module load iqtree
+► iqtree -s FcC_supermatrix.phy -m TEST -bb 1000 -pre spidoptera_muscle
+Ya con el archivo generado con los valores de soporte, abrí el archivo para copiar toda la información para la construcción del árbol filogenético con [cat].
+En phylo.io renderice la información que copie anteriormente y aplique el parámetro ‘Branch Labels/Support’.
+Adicionalmente, para enraizar el árbol obtenido me ubiqué en la rama central y le dí a la opción ‘reroot’, de esta forma finalmente obtuve el árbol correspondiente.
+
+*Análisis de árbol de máxima verosimilitud:
+![Arbol](https://user-images.githubusercontent.com/128840301/232170859-ac7b8724-ad6d-4a25-ac47-69739c95108e.png)
+
