@@ -53,4 +53,26 @@ Adicionalmente, para enraizar el árbol obtenido me ubiqué en la rama central y
 
 *Análisis de árbol de máxima verosimilitud:
 ![Arbol](https://user-images.githubusercontent.com/128840301/232170859-ac7b8724-ad6d-4a25-ac47-69739c95108e.png)
-Se observá que la especie Spodoptera cilium está efectivamente más estrechamente relacionada con la secuencia query, aunque exhiba un valor de boostrap inconsistente en comparación a las otras especies. Por otro lado, atendiendo a las relaciones filogenéticas inferidaas, las especies Mythimna loreyi y Peridroma saucia son bastante cercanas entre sí y el grupo más reciente dentro de la historia evolutiva del árbol, asimismo presentan unvalor de soporte de rama de mayor confianza con tiempo evolutivos muy similares en cuanto a diversificación de su ancestro en común. Y la especie que se consideraría menos reciente corresponde a Spodoptera exigua.
+Se observá que la especie Spodoptera cilium está más estrechamente relacionada con la secuencia query, aunque exhiba un valor de boostrap inconsistente en comparación a las otras especies. Por otro lado, atendiendo a las relaciones filogenéticas inferidaas, las especies Mythimna loreyi y Peridroma saucia son bastante cercanas entre sí y el grupo más reciente dentro de la historia evolutiva del árbol, asimismo presentan unvalor de soporte de rama de mayor confianza con tiempo evolutivos muy similares en cuanto a diversificación de su ancestro en común. Y la especie que se consideraría menos reciente corresponde a Spodoptera exigua.
+
+Tercer punto: 
+1)	En la carpeta ‘Archivos_PARCIAL’ descargué el siguiente archivo:
+► wget “https://raw.githubusercontent.com/paula-torres/bioinformatica_ur/main/files/archivo1.csv”
+2)	Para obtener el número de filas y de caracteres:
+► wc archivo1.csv
+De esta forma, el # de filas son 49 y el # de caracteres 908
+3)	Para contar el número de columnas:
+► awk -F "," '{print NF; exit}' archivo1.csv
+De esta forma, el # de columnas son 4
+4)	Para modificar “archivo1.csv” cambiando ‘chr’ por ‘Cromosoma’ y guardarlo en un nuevo archivo:
+► sed 's/chr/Cromosoma/' archivo1.csv | head -n 49 > result_file1.bed
+5)	Para modificar “archivo1.csv” reemplazando ‘,’ por ‘\t’ y guardarlo en un nuevo archivo:
+► sed 's/,/\t/g' result_file1.bed > result_file2.bed
+6)	Con el propósito de extraer todas las filas que compartan el string ‘coding’ y guardarlo en un nuevo archivo:
+► grep '.*' result_file2.bed | awk '$4 == "coding"' > result_file_coding1.bed
+
+Cuarto punto:
+1)	Para comprimir todos los archivos contenidos en ‘parcial1_StivennGutierrez’ en un archivo zip:
+► zip -r parcial1_StivennGutierrez.zip Parcial1
+2)	Para poder copiar este archivo zip a mi carpeta ‘Archivos_PARCIAL’, primero obtuve la ruta del archivo en el clúster con [pwd], luego me salí y dentro de la carpeta de la llave:
+► scp -r -i bio.pt.pem -P 37022 bio.pt@172.25.255.10:/home/bio.pt/data/Parcial1/parcial1_StivennGutierrez.zip /mnt/c/Users/stive/Downloads/Archivos_PARCIAL
