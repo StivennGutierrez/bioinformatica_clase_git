@@ -25,6 +25,7 @@ La especie Spodoptera cilium con un % de identidad igual a 96.9.
 Teniendo en cuenta también el valor de E-value, donde se observa que es 0, es decir el ruido de fondo por aleatoriedad es bajo y por ende la coincidencia es mayor. Así como el valor del Bit-score que indica una alineación de buena calidad con un valor de 1151 para esta especie.
 ¿Es un gen mitocondrial o nuclear? Mitocondrial
 Por último, cabe destacar que todas las secuencias para esta especie ranquearon un puntaje de mayor coincidencia e identidad para la secuencia query en comparación al resto.
+
 Segundo punto:
 Para realizar el alineamiento con las secuencias previamente utilizadas, las copie a una nueva carpeta ‘Alignment’:
 ► cp Spodoptera_sequences.fasta /home/bio.pt/data/Parcial1/parcial1_StivennGutierrez/Alignment
