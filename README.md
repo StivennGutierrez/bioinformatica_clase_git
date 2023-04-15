@@ -5,6 +5,7 @@ En NCBI, filtre por Popset y busqué el código ‘1776322181’, ya en el poset
 En Atom:
 Find all: (>\w+\.\w+)\s(\w+)\s(\w+).*
 Replace all: $1_COI_$2_$3
+
 Y llamé al archivo: Spodoptera_sequences.fasta
 3)	Luego, al ya tener listo el archivo, lo subí a una carpeta que cree en el clúster ‘Blast’:
 Para ello me ubiqué en la carpeta de la llave y corrí el siguiente código teniendo en cuenta la ruta en el clúster correspondiente a la carpeta ‘Blast’:
